@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useStore } from '../store'
 import { useUI } from '../ui'
 import type { Habit } from '../types'
-import { addDays, isoWeek, longDate, startOfWeek, WEEKDAY_LETTERS, fromKey } from '../dates'
+import { addDays, isoWeek, longDate, shortDate, startOfWeek, WEEKDAY_LETTERS, WEEKDAYS, fromKey } from '../dates'
 import { dayStats, groupLongest, groupStreak, habitStreak, isDue, milestones, scheduleLabel, totals, valueOf } from '../stats'
 import { Icon } from '../icons'
 import { Ring, SegmentRing } from '../components/Ring'
@@ -20,6 +20,7 @@ export function Today() {
     () => state.habits.filter((h) => isDue(h, date)).sort((a, b) => TIME_ORDER[a.time] - TIME_ORDER[b.time]),
     [state.habits, date],
   )
+  const notDue = state.habits.filter((h) => !isDue(h, date))
   const ds = dayStats(state, date)
   const isToday = date === today
 
@@ -155,6 +156,23 @@ export function Today() {
               </span>
               <span>New habit</span>
             </button>
+          </div>
+        )}
+
+        {notDue.length > 0 && (
+          <div className="offday">
+            <div className="kicker">Not scheduled {isToday ? 'today' : 'this day'}</div>
+            <div className="offday-list">
+              {notDue.map((h) => (
+                <span key={h.id} className="offday-item" title={h.createdAt > date ? 'Not started yet' : undefined}>
+                  <span className="tile" style={{ color: h.color }}>
+                    <Icon name={h.icon} size={14} />
+                  </span>
+                  {h.name}
+                  <small>{h.createdAt > date ? `starts ${shortDate(h.createdAt)}` : daysList(h.days)}</small>
+                </span>
+              ))}
+            </div>
           </div>
         )}
       </section>
@@ -313,4 +331,11 @@ function HabitCard({ habit: h, date, focused, onFocus, onToggle, onSet }: {
       </div>
     </div>
   )
+}
+
+/** "Sat, Sun" or "every day" / "weekdays" for common schedules. */
+function daysList(days: boolean[]): string {
+  const label = scheduleLabel(days)
+  if (label === 'every day' || label === 'weekdays' || label === 'weekends') return label
+  return WEEKDAYS.filter((_, i) => days[i]).join(', ')
 }
