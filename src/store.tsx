@@ -2,24 +2,43 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import type { AppState, Habit } from './types'
 import { emptyState, sampleState } from './sample'
 
-const KEY = 'streakwall:v1'
+const KEY = 'dayloop:v1'
+/** Earlier name of the app; data saved under it is moved over on first load. */
+const OLD_KEYS = ['streakwall:v1']
 
-function load(): AppState {
-  try {
-    const raw = localStorage.getItem(KEY)
-    if (raw) {
-      const parsed = JSON.parse(raw) as AppState
-      if (parsed && parsed.version === 1 && Array.isArray(parsed.habits)) return parsed
-    }
-  } catch {
-    /* storage unavailable: fall through to sample */
-  }
-  return sampleState()
+/** Old neon habit colours -> their sunset equivalents. */
+const COLOR_MAP: Record<string, string> = {
+  '#f9d65c': '#f2b54a',
+  '#a78bfa': '#9b6bd6',
+  '#ece4d4': '#e0c9a6',
+  '#ff7a59': '#d65a3a',
+  '#7cc8fb': '#5aa9c9',
+  '#ff79b0': '#e86a8a',
+  '#d4f75c': '#8fbf8a',
+  '#6eeab9': '#ff8a5c',
+}
+
+function migrate(s: AppState): AppState {
+  return { ...s, habits: s.habits.map((h) => ({ ...h, color: COLOR_MAP[h.color.toLowerCase()] ?? h.color })) }
 }
 
 export function isValidState(x: unknown): x is AppState {
   const s = x as AppState
   return !!s && s.version === 1 && Array.isArray(s.habits) && typeof s.logs === 'object'
+}
+
+function load(): AppState {
+  try {
+    for (const k of [KEY, ...OLD_KEYS]) {
+      const raw = localStorage.getItem(k)
+      if (!raw) continue
+      const parsed = JSON.parse(raw) as AppState
+      if (isValidState(parsed)) return migrate(parsed)
+    }
+  } catch {
+    /* storage unavailable: fall through to sample */
+  }
+  return sampleState()
 }
 
 interface Store {
@@ -95,7 +114,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           return { ...s, habits: list }
         }),
       setName: (name) => setState((s) => ({ ...s, name })),
-      replace: (s) => setState(s),
+      replace: (s) => setState(migrate(s)),
       startFresh: () => setState((s) => emptyState(s.isSample ? '' : s.name)),
       loadSample: () => setState(sampleState()),
     }),

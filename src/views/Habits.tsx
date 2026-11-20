@@ -6,7 +6,8 @@ import { addDays, monthYear, shortDate, WEEKDAY_LETTERS, WEEKDAYS } from '../dat
 import { amountLabel, habitStreak, isDue, rangeStats, valueOf } from '../stats'
 import { HABIT_ICONS, Icon } from '../icons'
 
-export const COLORS = ['#ff7a59', '#f9d65c', '#d4f75c', '#6eeab9', '#7cc8fb', '#a78bfa', '#ff79b0', '#ece4d4']
+/** Sunset habit colours. */
+export const COLORS = ['#ff8a5c', '#f2b54a', '#e86a8a', '#9b6bd6', '#8fbf8a', '#5aa9c9', '#e0c9a6', '#d65a3a']
 
 const IDEAS: { name: string; icon: string; kind?: HabitKind; target?: number; unit?: string }[] = [
   { name: 'Stretch', icon: 'stretch', kind: 'minutes', target: 10 },
@@ -29,7 +30,7 @@ type Draft = Omit<Habit, 'id' | 'createdAt'>
 const blank = (): Draft => ({
   name: '',
   icon: 'sparkle',
-  color: '#d4f75c',
+  color: '#ff8a5c',
   kind: 'check',
   target: 1,
   unit: '',

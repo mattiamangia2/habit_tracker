@@ -13,7 +13,7 @@ export function Settings({ onClose }: { onClose: () => void }) {
     const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' })
     const a = document.createElement('a')
     a.href = URL.createObjectURL(blob)
-    a.download = `streakwall-${todayKey()}.json`
+    a.download = `dayloop-${todayKey()}.json`
     a.click()
     URL.revokeObjectURL(a.href)
   }
@@ -25,7 +25,7 @@ export function Settings({ onClose }: { onClose: () => void }) {
       replace({ ...data, isSample: false })
       setMsg('Imported.')
     } catch {
-      setMsg('That file is not a Streakwall backup.')
+      setMsg('That file is not a Dayloop backup.')
     }
   }
 

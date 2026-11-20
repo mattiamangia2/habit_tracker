@@ -132,14 +132,14 @@ export interface Milestone {
 
 export function milestones(t: { checkins: number; perfectDays: number }, bestStreak: number): Milestone[] {
   return [
-    { id: 'w', label: 'One week', icon: 'flame', color: '#ff6a3d', value: bestStreak, goal: 7 },
-    { id: 'm', label: 'Thirty days', icon: 'flame', color: '#ff6a3d', value: bestStreak, goal: 30 },
-    { id: 'h', label: 'One hundred days', icon: 'flame', color: '#ff6a3d', value: bestStreak, goal: 100 },
-    { id: 'c5', label: '500 check-ins', icon: 'check', color: '#5cb8f7', value: t.checkins, goal: 500 },
-    { id: 'c1k', label: '1,000 check-ins', icon: 'check', color: '#5cb8f7', value: t.checkins, goal: 1000 },
-    { id: 'c2k', label: '2,000 check-ins', icon: 'check', color: '#5cb8f7', value: t.checkins, goal: 2000 },
-    { id: 'p25', label: '25 perfect days', icon: 'star', color: '#4fe0a6', value: t.perfectDays, goal: 25 },
-    { id: 'p100', label: '100 perfect days', icon: 'star', color: '#4fe0a6', value: t.perfectDays, goal: 100 },
+    { id: 'w', label: 'One week', icon: 'flame', color: '#ff8a5c', value: bestStreak, goal: 7 },
+    { id: 'm', label: 'Thirty days', icon: 'flame', color: '#ff8a5c', value: bestStreak, goal: 30 },
+    { id: 'h', label: 'One hundred days', icon: 'flame', color: '#ff8a5c', value: bestStreak, goal: 100 },
+    { id: 'c5', label: '500 check-ins', icon: 'check', color: '#5aa9c9', value: t.checkins, goal: 500 },
+    { id: 'c1k', label: '1,000 check-ins', icon: 'check', color: '#5aa9c9', value: t.checkins, goal: 1000 },
+    { id: 'c2k', label: '2,000 check-ins', icon: 'check', color: '#5aa9c9', value: t.checkins, goal: 2000 },
+    { id: 'p25', label: '25 perfect days', icon: 'star', color: '#8fbf8a', value: t.perfectDays, goal: 25 },
+    { id: 'p100', label: '100 perfect days', icon: 'star', color: '#8fbf8a', value: t.perfectDays, goal: 100 },
   ]
 }
 

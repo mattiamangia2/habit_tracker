@@ -98,7 +98,7 @@ export default function App() {
             <span className="brand-mark">
               <Icon name="check" size={16} stroke={3} />
             </span>
-            <span>Streakwall</span>
+            <span>Dayloop</span>
           </div>
           <nav className="tabs" role="tablist">
             {TABS.map((tab, i) => (
@@ -117,7 +117,7 @@ export default function App() {
           </nav>
           <div className="top-right">
             <button className="pill" onClick={() => go('today')} title="Done today">
-              <Ring value={t.due ? t.done / t.due : 0} size={18} stroke={3} color={t.due && t.done === t.due ? 'var(--lime)' : '#fff'} />
+              <Ring value={t.due ? t.done / t.due : 0} size={18} stroke={3} color={t.due && t.done === t.due ? 'var(--good)' : 'var(--text)'} />
               <b>
                 {t.done}/{t.due}
               </b>

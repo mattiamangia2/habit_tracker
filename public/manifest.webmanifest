@@ -1,10 +1,10 @@
 {
-  "name": "Streakwall",
-  "short_name": "Streakwall",
+  "name": "Dayloop",
+  "short_name": "Dayloop",
   "description": "Habit tracker with streaks and a year wall",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0b0b0c",
-  "theme_color": "#0b0b0c",
+  "background_color": "#120f0e",
+  "theme_color": "#120f0e",
   "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
 }

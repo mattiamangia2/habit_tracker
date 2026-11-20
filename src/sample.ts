@@ -21,14 +21,14 @@ export function sampleState(): AppState {
   const since = (daysAgo: number) => addDays(today, -daysAgo)
 
   const habits: (Habit & { p: number })[] = [
-    { id: 'h-up', name: 'Up by 6:30', icon: 'sunrise', color: '#f9d65c', kind: 'check', target: 1, time: 'morning', days: WEEKDAYS, createdAt: start, p: 0.9 },
-    { id: 'h-med', name: 'Meditate', icon: 'lotus', color: '#a78bfa', kind: 'minutes', target: 10, time: 'morning', days: EVERY, createdAt: start, p: 0.86 },
-    { id: 'h-run', name: 'Long run', icon: 'mountain', color: '#ece4d4', kind: 'check', target: 1, time: 'morning', days: [false, false, false, false, false, true, false], createdAt: since(84), p: 0.95 },
-    { id: 'h-move', name: 'Move 30 minutes', icon: 'pulse', color: '#ff7a59', kind: 'minutes', target: 30, time: 'any', days: [true, true, true, true, true, true, false], createdAt: start, p: 0.82 },
-    { id: 'h-water', name: 'Drink water', icon: 'drop', color: '#7cc8fb', kind: 'count', target: 8, unit: 'glasses', time: 'any', days: EVERY, createdAt: start, p: 0.85 },
-    { id: 'h-span', name: 'Spanish lesson', icon: 'language', color: '#ff79b0', kind: 'check', target: 1, time: 'afternoon', days: WEEKDAYS, createdAt: since(263), p: 0.9 },
-    { id: 'h-read', name: 'Read 20 pages', icon: 'book', color: '#d4f75c', kind: 'check', target: 1, time: 'evening', days: EVERY, createdAt: start, p: 0.87 },
-    { id: 'h-jour', name: 'Journal', icon: 'pen', color: '#6eeab9', kind: 'check', target: 1, time: 'evening', days: EVERY, createdAt: since(172), p: 0.8 },
+    { id: 'h-up', name: 'Up by 6:30', icon: 'sunrise', color: '#f2b54a', kind: 'check', target: 1, time: 'morning', days: WEEKDAYS, createdAt: start, p: 0.9 },
+    { id: 'h-med', name: 'Meditate', icon: 'lotus', color: '#9b6bd6', kind: 'minutes', target: 10, time: 'morning', days: EVERY, createdAt: start, p: 0.86 },
+    { id: 'h-run', name: 'Long run', icon: 'mountain', color: '#e0c9a6', kind: 'check', target: 1, time: 'morning', days: [false, false, false, false, false, true, false], createdAt: since(84), p: 0.95 },
+    { id: 'h-move', name: 'Move 30 minutes', icon: 'pulse', color: '#d65a3a', kind: 'minutes', target: 30, time: 'any', days: [true, true, true, true, true, true, false], createdAt: start, p: 0.82 },
+    { id: 'h-water', name: 'Drink water', icon: 'drop', color: '#5aa9c9', kind: 'count', target: 8, unit: 'glasses', time: 'any', days: EVERY, createdAt: start, p: 0.85 },
+    { id: 'h-span', name: 'Spanish lesson', icon: 'language', color: '#e86a8a', kind: 'check', target: 1, time: 'afternoon', days: WEEKDAYS, createdAt: since(263), p: 0.9 },
+    { id: 'h-read', name: 'Read 20 pages', icon: 'book', color: '#8fbf8a', kind: 'check', target: 1, time: 'evening', days: EVERY, createdAt: start, p: 0.87 },
+    { id: 'h-jour', name: 'Journal', icon: 'pen', color: '#ff8a5c', kind: 'check', target: 1, time: 'evening', days: EVERY, createdAt: since(172), p: 0.8 },
   ]
 
   const r = rng(20261119)

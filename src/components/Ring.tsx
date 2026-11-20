@@ -1,5 +1,5 @@
 /** Progress ring. `value` 0..1. */
-export function Ring({ value, size = 22, stroke = 3, color = 'var(--lime)', track = 'var(--line-2)' }: {
+export function Ring({ value, size = 22, stroke = 3, color = 'var(--accent)', track = 'var(--line-2)' }: {
   value: number
   size?: number
   stroke?: number

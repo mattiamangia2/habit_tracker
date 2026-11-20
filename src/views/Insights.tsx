@@ -41,7 +41,7 @@ export function Insights() {
   const prevFrom = addDays(prevTo, -(range.days - 1))
   const start = earliest(state)
   const habits = focus ? state.habits.filter((h) => h.id === focus) : state.habits
-  const color = focus ? habits[0]?.color ?? 'var(--lime)' : 'var(--lime)'
+  const color = focus ? habits[0]?.color ?? 'var(--accent)' : 'var(--accent)'
 
   const d = useMemo(() => {
     const cur = rangeStats(state, from, to, habits)

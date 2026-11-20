@@ -1,4 +1,4 @@
-# Streakwall
+# Dayloop
 
 A personal habit tracker with streaks and a year wall. It runs entirely in the browser: no account, no server.
 

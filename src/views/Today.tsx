@@ -111,7 +111,7 @@ export function Today() {
                 >
                   <span className="wl">{WEEKDAY_LETTERS[i]}</span>
                   <span className="wn">
-                    {!future && <Ring value={s.due ? s.done / s.due : 0} size={30} stroke={2.5} color={s.due && s.done === s.due ? 'var(--mint)' : '#fff'} />}
+                    {!future && <Ring value={s.due ? s.done / s.due : 0} size={30} stroke={2.5} color={s.due && s.done === s.due ? 'var(--good)' : 'var(--text)'} />}
                     <i>{fromKey(d).getDate()}</i>
                   </span>
                 </button>
@@ -233,7 +233,7 @@ export function Today() {
                 <span className="kicker">{next.goal - next.value} to go</span>
               </div>
               <div className="bar thin">
-                <i style={{ width: `${(next.value / next.goal) * 100}%`, background: 'var(--yellow)' }} />
+                <i style={{ width: `${(next.value / next.goal) * 100}%`, background: 'var(--amber)' }} />
               </div>
             </div>
           </div>

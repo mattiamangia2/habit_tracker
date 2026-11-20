@@ -5,7 +5,7 @@ import { MONTHS, addDays, dayOfYear, daysInMonth, longDate, toKey } from '../dat
 import { dayStats, earliest, groupLongest, groupStreak, habitLongest, habitStreak, milestones, totals } from '../stats'
 import { Icon } from '../icons'
 
-const LIME = '#d4f75c'
+const ACCENT = '#ff8a5c'
 
 function level(r: number): number {
   if (r <= 0) return 0
@@ -27,7 +27,7 @@ export function Year() {
   const raf = useRef<number>()
 
   const habits = filter === 'all' ? state.habits : state.habits.filter((h) => h.id === filter)
-  const color = filter === 'all' ? LIME : habits[0]?.color ?? LIME
+  const color = filter === 'all' ? ACCENT : habits[0]?.color ?? ACCENT
   const y0 = `${year}-01-01`
   const yEnd = year === thisYear ? today : `${year}-12-31`
   const lastDoy = year === thisYear ? dayOfYear(today) : dayOfYear(`${year}-12-31`)
