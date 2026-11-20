@@ -3,7 +3,7 @@ import { useStore } from '../store'
 import { useUI } from '../ui'
 import type { Habit, HabitKind, TimeOfDay } from '../types'
 import { addDays, monthYear, shortDate, WEEKDAY_LETTERS, WEEKDAYS } from '../dates'
-import { amountLabel, habitStreak, isDue, rangeStats, valueOf } from '../stats'
+import { amountLabel, habitStreak, isDue, rangeStats, scheduleLabel, valueOf } from '../stats'
 import { HABIT_ICONS, Icon } from '../icons'
 
 /** Sunset habit colours. */
@@ -27,6 +27,13 @@ const TIMES: { id: TimeOfDay; label: string }[] = [
 
 type Draft = Omit<Habit, 'id' | 'createdAt'>
 
+const PRESETS = [
+  { label: 'Every day', days: [true, true, true, true, true, true, true] },
+  { label: 'Weekdays', days: [true, true, true, true, true, false, false] },
+  { label: 'Weekends', days: [false, false, false, false, false, true, true] },
+]
+const sameDays = (a: boolean[], b: boolean[]) => a.every((x, i) => x === b[i])
+
 const blank = (): Draft => ({
   name: '',
   icon: 'sparkle',
@@ -35,7 +42,8 @@ const blank = (): Draft => ({
   target: 1,
   unit: '',
   time: 'any',
-  days: [true, true, true, true, true, true, true],
+  // Start with no days picked: tapping a day selects it.
+  days: [false, false, false, false, false, false, false],
 })
 
 export function Habits({ newSignal }: { newSignal: number }) {
@@ -80,6 +88,8 @@ export function Habits({ newSignal }: { newSignal: number }) {
     setDraft((d) => ({ ...d, kind, target: kind === 'check' ? 1 : kind === 'minutes' ? Math.max(5, d.target === 1 ? 10 : d.target) : Math.max(2, d.target === 1 ? 8 : d.target) }))
 
   const step = draft.kind === 'minutes' ? 5 : 1
+  const dayCount = draft.days.filter(Boolean).length
+  const problem = !draft.name.trim() ? 'Give it a name' : dayCount === 0 ? 'Pick at least one day' : null
 
   const edit = (h: Habit) => {
     setEditing(h.id)
@@ -93,7 +103,7 @@ export function Habits({ newSignal }: { newSignal: number }) {
       nameRef.current?.focus()
       return
     }
-    if (!draft.days.some(Boolean)) return
+    if (problem) return
     const clean = { ...draft, name, target: draft.kind === 'check' ? 1 : Math.max(1, draft.target) }
     if (editing) {
       const old = state.habits.find((h) => h.id === editing)!
@@ -254,7 +264,7 @@ export function Habits({ newSignal }: { newSignal: number }) {
                 ))}
               </div>
               <div className="hcard-meta">
-                {draft.time === 'any' ? 'Any time' : draft.time} · {draft.kind === 'check' ? 'once' : `${draft.target} ${draft.kind === 'minutes' ? 'min' : draft.unit || 'times'}`}
+                {draft.time === 'any' ? 'Any time' : draft.time} · {dayCount ? scheduleLabel(draft.days) : 'no days yet'}
               </div>
               <div className="hcard-name">{draft.name || 'New habit'}</div>
               <div className="hcard-foot">
@@ -344,11 +354,13 @@ export function Habits({ newSignal }: { newSignal: number }) {
           </div>
 
           <div className="row-between">
-            <span className="kicker">Days</span>
+            <span className="kicker">Days {dayCount === 0 && <span className="hint">· tap to pick</span>}</span>
             <span className="presets">
-              <button className="link" onClick={() => set('days', [true, true, true, true, true, true, true])}>Every day</button>
-              <button className="link" onClick={() => set('days', [true, true, true, true, true, false, false])}>Weekdays</button>
-              <button className="link" onClick={() => set('days', [false, false, false, false, false, true, true])}>Weekends</button>
+              {PRESETS.map((p) => (
+                <button key={p.label} className={`link ${sameDays(draft.days, p.days) ? 'on' : ''}`} onClick={() => set('days', [...p.days])}>
+                  {p.label}
+                </button>
+              ))}
             </span>
           </div>
           <div className="day-toggles">
@@ -356,15 +368,17 @@ export function Habits({ newSignal }: { newSignal: number }) {
               <button
                 key={d}
                 className={draft.days[i] ? 'on' : ''}
+                aria-pressed={draft.days[i]}
                 onClick={() => set('days', draft.days.map((x, j) => (j === i ? !x : x)))}
               >
+                {draft.days[i] && <Icon name="check" size={11} stroke={3.2} />}
                 {d}
               </button>
             ))}
           </div>
 
-          <button className="btn primary block" onClick={submit} disabled={!draft.name.trim() || !draft.days.some(Boolean)}>
-            {editing ? 'Save changes' : 'Add habit'}
+          <button className="btn primary block" onClick={submit} disabled={!!problem}>
+            {problem ?? (editing ? 'Save changes' : 'Add habit')}
           </button>
           {editing && (
             <button className="btn danger block" onClick={remove}>

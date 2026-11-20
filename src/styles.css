@@ -347,10 +347,14 @@ kbd {
 .presets { display: flex; gap: 10px; }
 .presets .link { color: var(--dim); font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; }
 .presets .link:hover { color: var(--text); }
+.presets .link.on { color: var(--accent); }
+.hint { color: var(--accent); text-transform: none; letter-spacing: 0; font-family: Inter, sans-serif; font-size: 11px; }
 .day-toggles { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
 .day-toggles button {
   height: 36px; border-radius: 10px; font-size: 12px; font-weight: 600; background: var(--panel-2); color: var(--dim); border: 1px solid var(--line-2);
 }
+.day-toggles button { position: relative; }
+.day-toggles button svg { position: absolute; top: 3px; right: 3px; width: 9px; height: 9px; }
 .day-toggles button.on { background: var(--accent); color: var(--ink); border-color: transparent; }
 
 /* ---------- year ---------- */
@@ -506,3 +510,13 @@ button.cell:hover { transform: scale(1.25); position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* habits not due on the selected day */
+.offday { margin-top: 18px; }
+.offday-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.offday-item {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 99px;
+  background: var(--panel-2); border: 1px solid var(--line-2); font-size: 12px;
+}
+.offday-item .tile { width: 26px; height: 26px; border-radius: 99px; }
+.offday-item small { color: var(--dim); }
